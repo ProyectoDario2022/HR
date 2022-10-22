@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddControllersWithViews();
 //Mio
 var ConnectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(ConnectionString));
