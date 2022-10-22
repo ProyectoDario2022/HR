@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.API", "HR.API\HR.API.csproj", "{FD91960C-FD82-4806-932C-B0C612B9A7CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.Common", "HR.Common\HR.Common.csproj", "{D6A5DCA2-A1AD-4252-9DAE-65479930B751}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD91960C-FD82-4806-932C-B0C612B9A7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD91960C-FD82-4806-932C-B0C612B9A7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD91960C-FD82-4806-932C-B0C612B9A7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD91960C-FD82-4806-932C-B0C612B9A7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A5DCA2-A1AD-4252-9DAE-65479930B751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A5DCA2-A1AD-4252-9DAE-65479930B751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A5DCA2-A1AD-4252-9DAE-65479930B751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A5DCA2-A1AD-4252-9DAE-65479930B751}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB7ECD1B-E61B-4B7D-889A-C9F4C267D0D3}
+	EndGlobalSection
+EndGlobal
