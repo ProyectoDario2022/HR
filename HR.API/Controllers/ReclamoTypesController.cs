@@ -22,25 +22,7 @@ namespace HR.API.Controllers
         // GET: ReclamoTypes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.VehicleTypes.ToListAsync());
-        }
-
-        // GET: ReclamoTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.VehicleTypes == null)
-            {
-                return NotFound();
-            }
-
-            var reclamoType = await _context.VehicleTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reclamoType == null)
-            {
-                return NotFound();
-            }
-
-            return View(reclamoType);
+              return View(await _context.ReclamoTypes.ToListAsync());
         }
 
         // GET: ReclamoTypes/Create
@@ -50,11 +32,10 @@ namespace HR.API.Controllers
         }
 
         // POST: ReclamoTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripcion")] ReclamoType reclamoType)
+        public async Task<IActionResult> Create(ReclamoType reclamoType)
         {
             if (ModelState.IsValid)
             {
@@ -68,12 +49,12 @@ namespace HR.API.Controllers
         // GET: ReclamoTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.VehicleTypes == null)
+            if (id == null || _context.ReclamoTypes == null)
             {
                 return NotFound();
             }
 
-            var reclamoType = await _context.VehicleTypes.FindAsync(id);
+            var reclamoType = await _context.ReclamoTypes.FindAsync(id);
             if (reclamoType == null)
             {
                 return NotFound();
@@ -82,11 +63,10 @@ namespace HR.API.Controllers
         }
 
         // POST: ReclamoTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion")] ReclamoType reclamoType)
+        public async Task<IActionResult> Edit(int id,ReclamoType reclamoType)
         {
             if (id != reclamoType.Id)
             {
@@ -119,43 +99,27 @@ namespace HR.API.Controllers
         // GET: ReclamoTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.VehicleTypes == null)
+            if (id == null || _context.ReclamoTypes == null)
             {
                 return NotFound();
             }
 
-            var reclamoType = await _context.VehicleTypes
+            var reclamoType = await _context.ReclamoTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reclamoType == null)
             {
                 return NotFound();
             }
-
-            return View(reclamoType);
-        }
-
-        // POST: ReclamoTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.VehicleTypes == null)
-            {
-                return Problem("Entity set 'DataContext.VehicleTypes'  is null.");
-            }
-            var reclamoType = await _context.VehicleTypes.FindAsync(id);
-            if (reclamoType != null)
-            {
-                _context.VehicleTypes.Remove(reclamoType);
-            }
-            
+            _context.ReclamoTypes.Remove(reclamoType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        
+
         private bool ReclamoTypeExists(int id)
         {
-          return _context.VehicleTypes.Any(e => e.Id == id);
+          return _context.ReclamoTypes.Any(e => e.Id == id);
         }
     }
 }

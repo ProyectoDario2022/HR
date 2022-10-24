@@ -9,7 +9,7 @@ namespace HR.API.Data
         {
 
         }
-        public DbSet<ReclamoType> VehicleTypes { get; set; }
+        public DbSet<ReclamoType> ReclamoTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
