@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HR.API.Data;
+﻿using HR.API.Data;
 using HR.API.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HR.API.Controllers
 {
@@ -22,7 +17,7 @@ namespace HR.API.Controllers
         // GET: ReclamoTypes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.ReclamoTypes.ToListAsync());
+            return View(await _context.ReclamoTypes.ToListAsync());
         }
 
         // GET: ReclamoTypes/Create
@@ -32,16 +27,35 @@ namespace HR.API.Controllers
         }
 
         // POST: ReclamoTypes/Create
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ReclamoType reclamoType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reclamoType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(reclamoType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya Existe este Tipo de Reclamo");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
             return View(reclamoType);
         }
@@ -54,7 +68,7 @@ namespace HR.API.Controllers
                 return NotFound();
             }
 
-            var reclamoType = await _context.ReclamoTypes.FindAsync(id);
+            ReclamoType? reclamoType = await _context.ReclamoTypes.FindAsync(id);
             if (reclamoType == null)
             {
                 return NotFound();
@@ -63,10 +77,10 @@ namespace HR.API.Controllers
         }
 
         // POST: ReclamoTypes/Edit/5
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,ReclamoType reclamoType)
+        public async Task<IActionResult> Edit(int id, ReclamoType reclamoType)
         {
             if (id != reclamoType.Id)
             {
@@ -79,19 +93,25 @@ namespace HR.API.Controllers
                 {
                     _context.Update(reclamoType);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException dbUpdateException)
                 {
-                    if (!ReclamoTypeExists(reclamoType.Id))
+
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, "Ya Existe este Tipo de Reclamo");
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
             }
             return View(reclamoType);
         }
@@ -104,7 +124,7 @@ namespace HR.API.Controllers
                 return NotFound();
             }
 
-            var reclamoType = await _context.ReclamoTypes
+            ReclamoType? reclamoType = await _context.ReclamoTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reclamoType == null)
             {
@@ -115,11 +135,6 @@ namespace HR.API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
 
-        private bool ReclamoTypeExists(int id)
-        {
-          return _context.ReclamoTypes.Any(e => e.Id == id);
-        }
     }
 }
