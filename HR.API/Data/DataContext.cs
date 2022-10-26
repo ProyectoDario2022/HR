@@ -10,11 +10,13 @@ namespace HR.API.Data
 
         }
         public DbSet<Funcion> Funciones { get; set; }
+        public DbSet<Material> Materiales { get; set; }
         public DbSet<ReclamoType> ReclamoTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Funcion>().HasIndex(x => x.Descripcion).IsUnique();
+            modelBuilder.Entity<Material>().HasIndex(x => x.Nombre).IsUnique();
             modelBuilder.Entity<ReclamoType>().HasIndex(x => x.Descripcion).IsUnique();
         }
 
