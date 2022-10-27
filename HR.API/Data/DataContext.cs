@@ -1,10 +1,12 @@
 ﻿using HR.API.Data.Configure;
 using HR.API.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.API.Data
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext>options):base(options)
         {
@@ -13,12 +15,15 @@ namespace HR.API.Data
         public DbSet<Funcion> Funciones { get; set; }
         public DbSet<Material> Materiales { get; set; }
         public DbSet<ReclamoType> ReclamoTypes { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
             new ConfigFuncion(modelBuilder.Entity<Funcion>());
             new ConfigMaterial(modelBuilder.Entity<Material>());
             new ConfigReclamoType(modelBuilder.Entity<ReclamoType>());
+            new ConfigUser(modelBuilder.Entity<User>());
 
+                      
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Funcion>().HasIndex(x => x.Descripcion).IsUnique();
             modelBuilder.Entity<Material>().HasIndex(x => x.Nombre).IsUnique();
