@@ -1,7 +1,7 @@
 ﻿using HR.API.Data.Entities;
 
 namespace HR.API.Data
-{
+{/*
     public class SeedDb
     {
         private readonly DataContext _context;
@@ -50,5 +50,5 @@ namespace HR.API.Data
                 await _context.SaveChangesAsync();
             }
         }
-    }
+    }*/
 }

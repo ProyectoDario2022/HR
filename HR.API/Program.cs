@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 var ConnectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(ConnectionString));
 
-builder.Services.AddTransient<SeedDb>();
+//builder.Services.AddTransient<SeedDb>();
 
 WebApplication? app = builder.Build();
 

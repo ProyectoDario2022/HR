@@ -1,4 +1,5 @@
-﻿using HR.API.Data.Entities;
+﻿using HR.API.Data.Configure;
+using HR.API.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.API.Data
@@ -14,10 +15,16 @@ namespace HR.API.Data
         public DbSet<ReclamoType> ReclamoTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            new ConfigFuncion(modelBuilder.Entity<Funcion>());
+            new ConfigMaterial(modelBuilder.Entity<Material>());
+            new ConfigReclamoType(modelBuilder.Entity<ReclamoType>());
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Funcion>().HasIndex(x => x.Descripcion).IsUnique();
             modelBuilder.Entity<Material>().HasIndex(x => x.Nombre).IsUnique();
             modelBuilder.Entity<ReclamoType>().HasIndex(x => x.Descripcion).IsUnique();
+
+
         }
 
     }
