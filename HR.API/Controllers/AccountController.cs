@@ -23,7 +23,7 @@ namespace HR.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
                 if(result.Succeeded)
