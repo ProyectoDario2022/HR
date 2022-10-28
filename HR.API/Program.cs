@@ -14,6 +14,8 @@ builder.Services.AddControllersWithViews();
 var ConnectionString = builder.Configuration["ConnectionString"];
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(ConnectionString));
 
+builder.Services.AddTransient<SeedDb>();
+
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
     x.User.RequireUniqueEmail = true;
@@ -29,6 +31,20 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 
 WebApplication? app = builder.Build();
+
+SeedData();
+
+async void SeedData()
+{
+    IServiceScopeFactory? scopeFactory=app.Services.GetService<IServiceScopeFactory>(); 
+    using (IServiceScope? scope = scopeFactory.CreateScope())
+    {
+        SeedDb? service=scope.ServiceProvider.GetService<SeedDb>();
+        await service.SeedAsync();
+    }
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

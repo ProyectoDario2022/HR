@@ -20,11 +20,12 @@ namespace HR.API.Data.Configure
                 PhoneNumber = "11111111",
                 UserName = "prueba1@gmail.com",
                 UserType = UserType.Admin,
+                
 
             };
             BuilderUser.HasData(user);
            // _userHelper.AddUserAsync(user, "123456");
-          //  _userHelper.AddUserToRoleAsync(user, UserType.Admin.ToString());
+           // _userHelper.AddUserToRoleAsync(user, UserType.Admin.ToString());
 
             var user2 = new User
             {

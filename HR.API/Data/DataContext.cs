@@ -18,10 +18,10 @@ namespace HR.API.Data
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
-            new ConfigFuncion(modelBuilder.Entity<Funcion>());
-            new ConfigMaterial(modelBuilder.Entity<Material>());
-            new ConfigReclamoType(modelBuilder.Entity<ReclamoType>());
-            new ConfigUser(modelBuilder.Entity<User>());
+          //  new ConfigFuncion(modelBuilder.Entity<Funcion>());
+          //  new ConfigMaterial(modelBuilder.Entity<Material>());
+          //  new ConfigReclamoType(modelBuilder.Entity<ReclamoType>());
+           // new ConfigUser(modelBuilder.Entity<User>());
 
                       
             base.OnModelCreating(modelBuilder);

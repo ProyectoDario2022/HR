@@ -1,10 +1,12 @@
 ﻿using HR.API.Data;
 using HR.API.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ReclamoTypesController : Controller
     {
         private readonly DataContext _context;

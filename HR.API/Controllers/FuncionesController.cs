@@ -1,14 +1,17 @@
 ﻿using HR.API.Data;
 using HR.API.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HR.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FuncionesController:Controller
     {
+       
         private readonly DataContext _context;
-
+       
         public FuncionesController(DataContext context)
         {
             _context = context;
