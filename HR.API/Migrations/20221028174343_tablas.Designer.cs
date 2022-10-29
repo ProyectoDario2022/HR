@@ -4,6 +4,7 @@ using HR.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221028174343_tablas")]
+    partial class tablas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,9 +158,6 @@ namespace HR.API.Migrations
                     b.HasIndex("AbonadoId");
 
                     b.HasIndex("MaterialId");
-
-                    b.HasIndex("Numero")
-                        .IsUnique();
 
                     b.HasIndex("TipoId");
 
@@ -458,9 +457,6 @@ namespace HR.API.Migrations
 
                     b.Property<int?>("FuncionId")
                         .HasColumnType("int");
-
-                    b.HasIndex("Document")
-                        .IsUnique();
 
                     b.HasIndex("FuncionId");
 

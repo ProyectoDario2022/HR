@@ -16,6 +16,6 @@ namespace HR.API.Data.Entities
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public string Nombre { get; set; }
 
-        // public List<Reclamo>? Reclamo { get; set; }
+        public List<Reclamo>? Reclamos { get; set; }
     }
 }
