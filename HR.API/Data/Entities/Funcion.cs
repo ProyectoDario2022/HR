@@ -10,6 +10,6 @@ namespace HR.API.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public string Descripcion { get; set; }
-        public List<Tecnico>? Tecnicos { get; set; }
+        public List<User>? Tecnicos { get; set; }
     }
 }

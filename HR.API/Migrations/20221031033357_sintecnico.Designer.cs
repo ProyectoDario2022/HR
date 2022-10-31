@@ -4,6 +4,7 @@ using HR.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221031033357_sintecnico")]
+    partial class sintecnico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,15 +190,16 @@ namespace HR.API.Migrations
                     b.Property<int>("ReclamoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("TecnicoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId1")
+                    b.Property<string>("TecnicoId1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ReclamoId", "UserId");
+                    b.HasKey("ReclamoId", "TecnicoId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("TecnicoId1");
 
                     b.ToTable("reclamoTecnicos");
                 });
@@ -260,9 +263,6 @@ namespace HR.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("FuncionId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
@@ -308,8 +308,6 @@ namespace HR.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FuncionId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -461,8 +459,13 @@ namespace HR.API.Migrations
                 {
                     b.HasBaseType("HR.API.Data.Entities.User");
 
+                    b.Property<int?>("FuncionId")
+                        .HasColumnType("int");
+
                     b.HasIndex("Document")
                         .IsUnique();
+
+                    b.HasIndex("FuncionId");
 
                     b.HasDiscriminator().HasValue("Tecnico");
                 });
@@ -513,22 +516,15 @@ namespace HR.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HR.API.Data.Entities.User", "User")
+                    b.HasOne("HR.API.Data.Entities.Tecnico", "Tecnico")
                         .WithMany("ReclamoTecnicos")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("TecnicoId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Reclamo");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HR.API.Data.Entities.User", b =>
-                {
-                    b.HasOne("HR.API.Data.Entities.Funcion", "Funcion")
-                        .WithMany("Tecnicos")
-                        .HasForeignKey("FuncionId");
-
-                    b.Navigation("Funcion");
+                    b.Navigation("Tecnico");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -582,6 +578,15 @@ namespace HR.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HR.API.Data.Entities.Tecnico", b =>
+                {
+                    b.HasOne("HR.API.Data.Entities.Funcion", "Funcion")
+                        .WithMany("Tecnicos")
+                        .HasForeignKey("FuncionId");
+
+                    b.Navigation("Funcion");
+                });
+
             modelBuilder.Entity("HR.API.Data.Entities.Abonado", b =>
                 {
                     b.Navigation("Reclamos");
@@ -609,7 +614,7 @@ namespace HR.API.Migrations
                     b.Navigation("Reclamo");
                 });
 
-            modelBuilder.Entity("HR.API.Data.Entities.User", b =>
+            modelBuilder.Entity("HR.API.Data.Entities.Tecnico", b =>
                 {
                     b.Navigation("ReclamoTecnicos");
                 });

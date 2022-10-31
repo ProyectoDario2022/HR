@@ -19,7 +19,7 @@ namespace HR.API.Data
         public DbSet<Reclamo> Reclamos { get; set; }
         public DbSet<ReclamoMaterial> ReclamoMateriales { get; set; }
         public DbSet<ReclamoTecnico> reclamoTecnicos { get; set; }
-        public DbSet<Tecnico> Tecnicos { get; set; }
+       // public DbSet<Tecnico> Tecnicos { get; set; }
        
 
 
@@ -41,7 +41,7 @@ namespace HR.API.Data
             modelBuilder.Entity<Tecnico>().HasIndex(x => x.Document).IsUnique();
            
             modelBuilder.Entity<ReclamoMaterial>().HasKey(x => new { x.ReclamoId, x.MaterialId });//muchos a muchos
-            modelBuilder.Entity<ReclamoTecnico>().HasKey(x => new { x.ReclamoId, x.TecnicoId });//muchos a muchos
+            modelBuilder.Entity<ReclamoTecnico>().HasKey(x => new { x.ReclamoId, x.UserId });//muchos a muchos
         }
 
     }

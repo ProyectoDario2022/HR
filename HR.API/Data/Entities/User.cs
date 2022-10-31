@@ -43,5 +43,12 @@ namespace HR.API.Data.Entities
         public string FullName => $"{FirstName}{LastName}";
 
 
+        public Funcion? Funcion { get; set; }
+        public List<ReclamoTecnico>? ReclamoTecnicos { get; set; }
+        [Display(Name = "# Reclamos")]
+        public int reclamosCount => ReclamoTecnicos == null ? 0 : ReclamoTecnicos.Count;
+
+
+
     }
 }

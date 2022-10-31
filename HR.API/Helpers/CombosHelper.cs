@@ -47,7 +47,7 @@ namespace HR.API.Helpers
 
         public IEnumerable<SelectListItem> GetComboTecnicos()
         {
-            List<SelectListItem> list = _context.Tecnicos.Select(x => new SelectListItem
+            List<SelectListItem> list = _context.Users.Select(x => new SelectListItem
             {
                 Text = x.FullName,
                 Value = $"{x.Id}"

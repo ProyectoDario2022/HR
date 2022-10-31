@@ -3,9 +3,9 @@
     public class ReclamoTecnico
     {
         public int ReclamoId { get; set; }
-        public int TecnicoId { get; set; }
+        public int UserId { get; set; }
 
-        public Tecnico Tecnico { get; set; }
+        public User User { get; set; }
        
         public Reclamo Reclamo { get; set; }
     }
