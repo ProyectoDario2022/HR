@@ -22,8 +22,8 @@ namespace HR.API.Data
             await CheckMaterial();
             await CheckRolesAsync();
             await CheckUserAsync("23234543", "Dario", "Paez", "prueba1@gmail.com", "1234567890", "callao 10", UserType.Admin);
-
-
+            await CheckUserAsync("23234043", "Esteban", "Diaz", "prueba2@gmail.com", "1234567890", "callao 1", UserType.User);
+            await CheckUserAsync("23234583", "Matias", "Ques", "prueba3@gmail.com", "1234567890", "callao 14", UserType.User);
         }
 
         private async Task<User> CheckUserAsync(

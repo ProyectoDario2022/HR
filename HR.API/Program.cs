@@ -28,7 +28,10 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
 
 }).AddEntityFrameworkStores<DataContext>();
 
+
 builder.Services.AddScoped<IUserHelper, UserHelper>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
+
 
 WebApplication? app = builder.Build();
 
