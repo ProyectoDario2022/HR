@@ -21,9 +21,9 @@ namespace HR.API.Data
             await CheckFuncion();
             await CheckMaterial();
             await CheckRolesAsync();
-            await CheckUserAsync("23234543", "Dario", "Paez", "prueba1@gmail.com", "1234567890", "callao 10", UserType.Admin);
-            await CheckUserAsync("23234043", "Esteban", "Diaz", "prueba2@gmail.com", "1234567890", "callao 1", UserType.User);
-            await CheckUserAsync("23234583", "Matias", "Ques", "prueba3@gmail.com", "1234567890", "callao 14", UserType.User);
+            await CheckUserAsync("23234543", "Dario", "Paez", "prueba1@gmail.com", "1234567890", "callao 10", UserType.Admin,null);
+            await CheckUserAsync("23234043", "Esteban", "Diaz", "prueba2@gmail.com", "1234567890", "callao 1", UserType.User,"Service");
+            await CheckUserAsync("23234583", "Matias", "Ques", "prueba3@gmail.com", "1234567890", "callao 14", UserType.User,"Red");
         }
 
         private async Task<User> CheckUserAsync(
@@ -33,11 +33,12 @@ namespace HR.API.Data
             string email,
             string phone,
             string address,
-            UserType userType)
+            UserType userType,string cfuncion)
         {
             User user=await _userHelper.GetUserAsync(email);
             if(user==null)
             {
+                var funcion=_context.Funciones.FirstOrDefault(x => x.Descripcion== cfuncion);
                 user = new User
                 {   UserName = email,
                     Document = document,
@@ -47,6 +48,7 @@ namespace HR.API.Data
                     PhoneNumber = phone,
                     Direccion = address,
                     UserType = userType,
+                    Funcion=funcion,
 
                 };
                 await _userHelper.AddUserAsync(user, "123456");

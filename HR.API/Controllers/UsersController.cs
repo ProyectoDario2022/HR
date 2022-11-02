@@ -28,7 +28,7 @@ namespace HR.API.Controllers
             var tecnicos = await _context.Users.Where(x => x.UserType == UserType.User)
                       .Include(x => x.ReclamoTecnicos)
                       .ThenInclude(x => x.Reclamo)
-                      .Include(c => c.Funcion)
+                      .Include(x => x.Funcion)
                 //.Select(x => new { ReclamoTecnicos = x, Reclamos = x.ReclamoTecnicos.Where(e => e.Reclamo.Fecha == dia) })
                 .ToListAsync();
             return View(tecnicos);
