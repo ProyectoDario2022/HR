@@ -34,7 +34,9 @@ namespace HR.API.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7053/images/noimage.png"
-            : $"https://localhost:7053/users/{ImageId}";
+           : $"https://drive.internxt.com/s/file/6f2762e72b058181bf24/daa17bd41f9585410ae83a3960664a9f47647ee46d10e2c43a737be3e0511985/{ImageId}";
+            
+           // : $"https://localhost:7053/users/{ImageId}";
 
         [Display(Name = "Tipo De Usuario")]
         public UserType UserType { get; set; }

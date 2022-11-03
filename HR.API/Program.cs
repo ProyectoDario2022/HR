@@ -35,15 +35,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 
-
+//Inyeccion por dependencia
 
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
-
+//builder.Services.AddScoped<IBlodHelper, BlobHelper>();
+builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
 
 WebApplication? app = builder.Build();
 
 SeedData();
+
+
 
 async void SeedData()
 {
@@ -55,7 +58,7 @@ async void SeedData()
     }
 }
 
-
+//Inyeccion por dependencia
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
