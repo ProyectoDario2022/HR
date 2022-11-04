@@ -52,7 +52,7 @@ namespace HR.API.Controllers
         public async Task<IActionResult> Create(UserViewModel model)
         {
             if (!ModelState.IsValid)
-            {
+            {//TODO:falta colocar la imagen del blob
                 Guid imageId = Guid.Empty;
                 if(model.ImageFile!=null)
                 {
@@ -64,8 +64,54 @@ namespace HR.API.Controllers
                 await _userHelper.AddUserToRoleAsync(user, user.UserType.ToString());
                 return RedirectToAction(nameof(Index));
             }
+            model.Funciones= _combosHelper.GetComboFunciones();
             return View(model);
         }
+
+       
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(Guid.Parse(id));
+            if (user == null)
+            {
+                return NotFound();
+            }
+            UserViewModel model = _converterHelper.ToUserViewModel(user);
+
+            return View(model);
+        }
+
+        // POST: /Edit/5
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserViewModel model)
+        {
+           
+            if (ModelState.IsValid)
+            {
+                   Guid imageId=model.ImageId;
+                    if(model.ImageFile!=null)
+                    {
+                        imageId = model.ImageId;// await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    }
+
+                    User user = await _converterHelper.ToUserAsync(model, imageId, false);
+                    await _userHelper.UpdateUserAsync(user);
+
+                    return RedirectToAction(nameof(Index));
+               
+            }
+
+            model.Funciones = _combosHelper.GetComboFunciones();
+            return View(model);
+        }
+
     }
 
 }

@@ -47,6 +47,13 @@ namespace HR.API.Helpers
             return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);//aca iria include (x=>x.DocumentType) si tendria tipo de documento
         }
 
+        public async Task<User> GetUserAsync(Guid id)
+        {
+            return await _context.Users
+                .Include(x=>x.Funcion)
+                .FirstOrDefaultAsync(x => x.Id == id.ToString());
+        }
+
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
@@ -61,6 +68,20 @@ namespace HR.API.Helpers
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            User currentUser = await GetUserAsync(user.Email);
+            currentUser.LastName=user.LastName;
+            currentUser.FirstName=user.FirstName;
+            currentUser.Funcion = user.Funcion;
+            currentUser.Document=user.Document;
+            currentUser.Direccion=user.Direccion;
+            currentUser.ImageId=user.ImageId;
+            currentUser.PhoneNumber=user.PhoneNumber;
+           
+            return await _userManager.UpdateAsync(currentUser);
         }
     }
 }
