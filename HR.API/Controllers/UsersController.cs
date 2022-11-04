@@ -112,6 +112,22 @@ namespace HR.API.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            User user=await _userHelper.GetUserAsync(Guid.Parse(id));
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _userHelper.DeleteUserAsync(user);
+            //await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 
 }

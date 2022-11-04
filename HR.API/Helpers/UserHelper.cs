@@ -42,15 +42,26 @@ namespace HR.API.Helpers
             }
         }
 
+        public async Task<IdentityResult> DeleteUserAsync(User user)
+        {
+            return await _userManager.DeleteAsync(user);
+        }
+
         public async Task<User> GetUserAsync(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);//aca iria include (x=>x.DocumentType) si tendria tipo de documento
+            return await _context.Users
+                .Include(x => x.Funcion)
+                .Include(x => x.ReclamoTecnicos)
+                .ThenInclude(x => x.Reclamo)
+                .FirstOrDefaultAsync(x => x.Email == email);//aca iria include (x=>x.DocumentType) si tendria tipo de documento
         }
 
         public async Task<User> GetUserAsync(Guid id)
         {
             return await _context.Users
                 .Include(x=>x.Funcion)
+                .Include(x=>x.ReclamoTecnicos)
+                .ThenInclude(x=>x.Reclamo)
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
