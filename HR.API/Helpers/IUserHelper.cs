@@ -1,5 +1,6 @@
 ﻿using HR.API.Data.Entities;
 using HR.API.Models;
+using HR.Common.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace HR.API.Helpers
@@ -9,6 +10,7 @@ namespace HR.API.Helpers
         Task<User> GetUserAsync(string email);//le paso el email y me devuelve el usuario
         Task<User> GetUserAsync(Guid id);//le paso el email y me devuelve el usuario
         Task<IdentityResult> AddUserAsync(User user,string password);
+        Task<User> AddUserAsync(AddUserViewModel model,Guid imageId ,UserType userType);
         Task<IdentityResult> UpdateUserAsync(User user);
         Task<IdentityResult> DeleteUserAsync(User user);
         Task CheckRoleAsync(string roleName);//crea los roles en la aplicacion

@@ -39,12 +39,13 @@
                                  @Html.DisplayNameFor(model => model.PhoneNumber)
                                  
                              </th>
+                             <!--
                              <th>
                                  @Html.DisplayNameFor(model => model.reclamosCount)
                                 
                              </th>
 
-
+                             --->
 
                              <th></th>
                          </tr>
@@ -72,13 +73,18 @@
                                  @Html.DisplayFor(modelItem=>item.PhoneNumber)
                                  
                              </th>
+                              <!--
                              <th>
                                  @Html.DisplayFor(modelItem => item.reclamosCount) 
                                 
                              </th>
+                              -->
+
                             <td>
                                  <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a> 
+                                 <!--
                                  <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Reclamos</a> 
+                                 -->
                                  <button data-id="@item.Id" class="btn btn-danger deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">Borrar</button>
                             </td>
                             </tr>

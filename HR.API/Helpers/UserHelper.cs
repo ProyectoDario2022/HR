@@ -1,6 +1,7 @@
 ﻿using HR.API.Data;
 using HR.API.Data.Entities;
 using HR.API.Models;
+using HR.Common.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,33 @@ namespace HR.API.Helpers
             var o= await _userManager.CreateAsync(user, password);
 
             return o;
+        }
+
+        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType)
+        {
+            User user = new User
+            {
+                Direccion = model.Direccion,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImageId = imageId,
+                PhoneNumber = model.PhoneNumber,
+                Funcion = await _context.Funciones.FindAsync(model.FuncionId),
+                UserName = model.Username,
+                UserType = userType
+
+            };
+            IdentityResult result=await _userManager.CreateAsync(user, model.Password);
+            if(result != IdentityResult.Success)
+            {
+                return null;
+            }
+            User newUser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
+
         }
 
         public async Task AddUserToRoleAsync(User user, string roleName)

@@ -124,10 +124,17 @@ namespace HR.API.Controllers
             {
                 return NotFound();
             }
+           
+            //TODO falta blob
+            
+            // await _blobHelper.DeleteBlobAsync(user.ImageId,"users");
             await _userHelper.DeleteUserAsync(user);
-            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+    
+    
+    
     }
+
 
 }
