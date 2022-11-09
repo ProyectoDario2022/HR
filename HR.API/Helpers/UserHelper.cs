@@ -33,6 +33,7 @@ namespace HR.API.Helpers
         {
             User user = new User
             {
+                
                 Direccion = model.Direccion,
                 Document = model.Document,
                 Email = model.Username,

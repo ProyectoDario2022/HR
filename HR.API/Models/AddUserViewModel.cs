@@ -2,7 +2,7 @@
 
 namespace HR.API.Models
 {
-    public class AddUserViewModel:EditUserViewModel
+    public class AddUserViewModel : EditUserViewModel
     {
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Debes instroducir un Email Válido")]

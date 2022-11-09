@@ -59,10 +59,10 @@ namespace HR.API.Controllers
 
         public IActionResult Register()
         {
-            AddUserViewModel model =new AddUserViewModel
+            AddUserViewModel model = new AddUserViewModel
             {
-               Funciones = _combosHelper.GetComboFunciones()
-             
+                Funciones = _combosHelper.GetComboFunciones(),
+                Id = Guid.NewGuid().ToString()//agregue esto id
             };
             return View(model);
         }
