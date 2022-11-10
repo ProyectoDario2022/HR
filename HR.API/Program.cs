@@ -18,6 +18,8 @@ builder.Services.AddTransient<SeedDb>();
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
+    x.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    x.SignIn.RequireConfirmedEmail = true;
     x.User.RequireUniqueEmail = true;
     x.Password.RequireDigit = false;
     x.Password.RequiredUniqueChars = 0;
@@ -26,7 +28,8 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
     x.Password.RequireUppercase= false;
     //x.Password.RequiredLength = 6;
 
-}).AddEntityFrameworkStores<DataContext>();
+}).AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -41,6 +44,8 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 //builder.Services.AddScoped<IBlodHelper, BlobHelper>();
 builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
+builder.Services.AddScoped<IMailHelper, MailHelper>();
+
 
 WebApplication? app = builder.Build();
 

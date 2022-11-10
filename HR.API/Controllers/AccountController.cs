@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using HR.API.Data;
 using HR.API.Data.Entities;
 using HR.Common.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace HR.API.Controllers
 {
@@ -154,7 +155,32 @@ namespace HR.API.Controllers
             model.Funciones=_combosHelper.GetComboFunciones();  
             return View(model);
         }
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if(user!=null)
+                {
+                    IdentityResult result=await _userHelper.ChangePasswordAsync(user,model.OldPassword,model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(ChangeUser));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Usuario no Encontrado");
+                    }
+                }
 
+            }
+            return View(model);
+        }
 
     }
 }
