@@ -101,5 +101,60 @@ namespace HR.API.Controllers
             model.Funciones = _combosHelper.GetComboFunciones();
             return View(model);
         }
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if(user==null)
+            {
+                return NotFound();
+            }
+            EditUserViewModel model = new EditUserViewModel
+            {
+                Direccion = user.Direccion,
+                Document = user.Document,
+                Funciones = _combosHelper.GetComboFunciones(),
+                FuncionId=user.Funcion.Id,
+                Id =user.Id,
+                ImageId = user.ImageId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+               //ReclamoTecnicos = user.ReclamoTecnicos,
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+                //TODO falta imagen 
+                /*
+                if(model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(ModelState.ImageFile, "users");
+                }*/
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.Direccion = model.Direccion;
+                user.Document = model.Document;
+                user.Funcion = await _context.Funciones.FindAsync(model.FuncionId);
+                user.ImageId = imageId;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                    //ReclamoTecnicos = user.ReclamoTecnicos,
+                
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index","Home");
+            }
+            model.Funciones=_combosHelper.GetComboFunciones();  
+            return View(model);
+        }
+
+
     }
 }
