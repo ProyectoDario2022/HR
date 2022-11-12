@@ -21,8 +21,8 @@ namespace HR.API.Helpers
                 string password = _configuration["Mail:Password"];
 
                 MimeMessage message = new MimeMessage();
-                message.From.Add(new MailboxAddress(from));
-                message.To.Add(new MailboxAddress(to));
+               // message.From.Add(new MailboxAddress(from));
+              //  message.To.Add(new MailboxAddress(to));
                 message.Subject=subject;
                 BodyBuilder bodyBuilder = new BodyBuilder
                 {
