@@ -5,6 +5,7 @@ using HR.API.Data;
 using HR.API.Data.Entities;
 using HR.Common.Enums;
 using Microsoft.AspNetCore.Identity;
+using HR.Common.Models;
 
 namespace HR.API.Controllers
 {
@@ -13,13 +14,15 @@ namespace HR.API.Controllers
         private readonly IUserHelper _userHelper;
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
+        private readonly IMailHelper _mailHelper;
 
         //TODO falta IBlobHelper blobHelper 
-        public AccountController(IUserHelper userHelper,DataContext context,ICombosHelper combosHelper)
+        public AccountController(IUserHelper userHelper,DataContext context,ICombosHelper combosHelper,IMailHelper mailHelper)
         {
             _userHelper = userHelper;
             _context = context;
             _combosHelper = combosHelper;
+            _mailHelper = mailHelper;
         }
         public IActionResult Login()
         {
@@ -87,7 +90,7 @@ namespace HR.API.Controllers
                     model.Funciones=_combosHelper.GetComboFunciones();
                     return View(model);
                 }
-                LoginViewModel loginViewModel = new LoginViewModel
+                /*LoginViewModel loginViewModel = new LoginViewModel
                 {
                     Password = model.Password,
                     RememberMe = false,
@@ -97,7 +100,30 @@ namespace HR.API.Controllers
                 if(result2.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
+                }*/
+
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Hoja De Ruta - Confirmación de Email",
+                    $"<h1>Hoja De Ruta  - Confirmación de Email</h1>" +
+                        $"Para habilitar el usuario por favor hacer click en el siguiente link:, " +
+                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message="Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.";
+                    return View(model);
                 }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+
             }
             model.Funciones = _combosHelper.GetComboFunciones();
             return View(model);
@@ -181,6 +207,26 @@ namespace HR.API.Controllers
             }
             return View(model);
         }
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
 
+            User user = await _userHelper.GetUserAsync(new Guid(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
     }
 }

@@ -4,6 +4,6 @@ namespace HR.API.Helpers
 {
     public interface IMailHelper
     {
-        Response SendMail(string to, string subject, string body);
+        Response SendMail(string toName, string toEmail, string subject, string body);
     }
 }

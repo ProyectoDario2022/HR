@@ -18,8 +18,8 @@ builder.Services.AddTransient<SeedDb>();
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
-   // x.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-   // x.SignIn.RequireConfirmedEmail = true;
+    x.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    x.SignIn.RequireConfirmedEmail = true;
     x.User.RequireUniqueEmail = true;
     x.Password.RequireDigit = false;
     x.Password.RequiredUniqueChars = 0;
