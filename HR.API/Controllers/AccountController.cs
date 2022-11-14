@@ -228,5 +228,12 @@ namespace HR.API.Controllers
 
             return View();
         }
+        [HttpPost]
+        public IActionResult RecoverPassword()
+        {
+    
+        
+            return View();
+        }
     }
 }
