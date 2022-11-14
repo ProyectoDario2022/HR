@@ -82,9 +82,7 @@ namespace HR.API.Controllers
                         $"Para habilitar el usuario por favor hacer click en el siguiente link:, " +
                         $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
 
-
-
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
             }
             model.Funciones= _combosHelper.GetComboFunciones();
             return View(model);
