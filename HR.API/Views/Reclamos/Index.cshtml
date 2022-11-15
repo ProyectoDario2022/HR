@@ -1,7 +1,118 @@
-﻿
+﻿@model IEnumerable<HR.API.Data.Entities.Reclamo>
+
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 
-<h1>Index</h1>
+<p>
+    <a asp-action="Create" class="btb btn-primary">Nuevo</a>
+</p>
+<div class="row">
+    <div class="clo-mod-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <h3 class="panel-title">Lista de Reclamos</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                         <tr>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.Abonado)
+                                 
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.Numero)
+                                
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.TipoReclamo)
+                                 
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.HLlegada)
+                                
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.HSalida)
+                                
+                             </th>
 
+                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) 
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Abonado)
+                                   
+                                    
+                                </td>
+
+                                <td>
+                                   
+                                    @Html.DisplayFor(modelItem => item.Numero)
+                                    
+                                </td>
+
+                                 <td>
+                                   
+                                    @Html.DisplayFor(modelItem => item.TipoReclamo)
+                                    
+                                </td>
+                                 <td>
+                                   
+                                    @Html.DisplayFor(modelItem => item.HLlegada)
+                                    
+                                </td>
+                                 <td>
+                                   
+                                    @Html.DisplayFor(modelItem => item.HSalida)
+                                    
+                                </td>
+
+
+
+                            <td>
+                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a> |
+                                 <button data-id="@item.Id" class="btn btn-danger deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">Borrar</button>
+                            </td>
+                            </tr>
+                        }
+                   </tbody>
+             </table>
+          </div>
+        </div>
+     </div>
+   </div>
+
+<partial name="_DeleteDialog" />
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/js/deleteDialog.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('#MyTable').DataTable({
+                "language":{
+                    "url":"//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu":[
+                    [25,50,100,200,-1],
+                    [25,50,100,200,"Todos"]
+                ]
+            });
+            //Delete Item ok
+          //ok
+      
+          sc_deleteDialog.openModal('deleteItem', true,'btnYesDelete', '/Reclamos/Delete/', false);
+         
+        });
+    
+    </script>
+}
