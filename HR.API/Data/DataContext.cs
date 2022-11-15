@@ -36,6 +36,8 @@ namespace HR.API.Data
             modelBuilder.Entity<Material>().HasIndex(x => x.Nombre).IsUnique();
             modelBuilder.Entity<ReclamoType>().HasIndex(x => x.Descripcion).IsUnique();
 
+            modelBuilder.Entity<Reclamo>().HasIndex(x => x.Numero).IsUnique();
+
             modelBuilder.Entity<Abonado>().HasIndex(x => x.Numero).IsUnique();
             modelBuilder.Entity<Reclamo>().HasIndex(x => x.Numero).IsUnique();
             modelBuilder.Entity<Tecnico>().HasIndex(x => x.Document).IsUnique();
