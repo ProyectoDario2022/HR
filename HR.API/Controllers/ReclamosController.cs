@@ -51,7 +51,7 @@ namespace HR.API.Controllers
 
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Create(Reclamo reclamo)
+            public async Task<IActionResult> Create(ReclamoViewModel reclamo)
             {
                 if (ModelState.IsValid)
                 {

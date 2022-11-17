@@ -9,7 +9,7 @@ namespace HR.API.Models
         public int Id { get; set; }
 
         [Display(Name = "Número de Reclamo")]
-        [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
+      //  [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public int Numero { get; set; }
 
@@ -21,12 +21,12 @@ namespace HR.API.Models
         public IEnumerable<SelectListItem>? TipoReclamos { get; set; }
 
         [Display(Name = "Hora de Llegada")]
-        [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
+       // [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public DateTime? HLlegada { get; set; }
 
         [Display(Name = "Hora de Salida")]
-        [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
+       // [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public DateTime? HSalida { get; set; }
 
@@ -42,21 +42,21 @@ namespace HR.API.Models
 
        
         [Display(Name = "Tecnico asignado")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes Seleccionar Un Tecnico para el Reclamo")]
+        //[Range(1, int.MaxValue,ErrorMessage = "Debes Seleccionar Un Tecnico para el Reclamo")]//int.MaxValue
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
 
-        public int TecnicoId { get; set; }
+        public string TecnicoId { get; set; }
 
         public IEnumerable<SelectListItem>? Tecnicos { get; set; }
      
 
         [Display(Name = "Abonado del Reclamo")]
-        [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
+      //  [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
-        public Abonado? Abonado { get; set; }
+        public int? AbonadoId { get; set; }
 
         [Display(Name = "Fecha del Reclamo")]
-        [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
+        //[MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public DateTime Fecha { get; set; }
 

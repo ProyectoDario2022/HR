@@ -10,27 +10,33 @@
                 <input asp-for="Numero" class="form-control" />
                 <span asp-validation-for="Numero" class="text-danger"></span>
                 
-                <label asp-for="Abonado" class="control-label"></label>
-                <input asp-for="Abonado" class="form-control" />
-                <span asp-validation-for="Abonado" class="text-danger"></span>
+                <label asp-for="AbonadoId" class="control-label"></label>
+                <input asp-for="AbonadoId" class="form-control" />
+                <span asp-validation-for="AbonadoId" class="text-danger"></span>
 
                 <label asp-for="Comentario" class="control-label"></label>
                 <input asp-for="Comentario" class="form-control" />
                 <span asp-validation-for="Comentario" class="text-danger"></span>
-              <div class="form-group">
+              
+                 <div class="form-group">
+                     <label asp-for="TecnicoId" class="control-label"></label>
+                     <select asp-for="TecnicoId" asp-items="Model.Tecnicos" class="form-control">
+                     
+                      </select>
+                      <span asp-validation-for="TecnicoId" class="text-danger"></span>
+                         
+                 </div>
+                
+                
+                
+                <div class="form-group">
 
                 <label asp-for="ReclamoMateriaId" class="control-label"></label>
                 <select asp-for="ReclamoMateriaId" asp-items="Model.Materiales" class="form-control"></select>
                 <span asp-validation-for="ReclamoMateriaId" class="text-danger"></span>
          
             </div>
-             <div class="form-group">
-
-                <label asp-for="TecnicoId" class="control-label"></label>
-                <select asp-for="TecnicoId" asp-items="Model.Tecnicos" class="form-control"></select>
-                <span asp-validation-for="TecnicoId" class="text-danger"></span>
-         
-                </div>
+            
                <div class="form-group">
 
                 <label asp-for="ReclamoTypeId" class="control-label"></label>
