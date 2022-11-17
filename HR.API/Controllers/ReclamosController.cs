@@ -1,5 +1,7 @@
 ﻿using HR.API.Data;
 using HR.API.Data.Entities;
+using HR.API.Helpers;
+using HR.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,34 +12,52 @@ namespace HR.API.Controllers
         public class ReclamosController : Controller
         {
             private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-            public ReclamosController(DataContext context)
+        public ReclamosController(DataContext context,ICombosHelper combosHelper)
             {
                 _context = context;
-            }
+                _combosHelper = combosHelper;
+        }
             // GET: ReclamoTypes
             public async Task<IActionResult> Index()
             {
-                return View(await _context.Reclamos.ToListAsync());
+                return View(await _context.Reclamos
+                    .Include(x=>x.Abonado)
+                    .Include(x=>x.ReclamoMateriales)
+                    .ThenInclude(c=>c.Material)
+                    .Include(x=>x.ReclamoTecnicos)
+                    .ThenInclude(v=>v.User)
+                    .Include(x=>x.TipoReclamo)
+                    .ToListAsync());
             }
 
             // GET: ReclamoTypes/Create
             public IActionResult Create()
             {
-                return View();
+                 ReclamoViewModel model = new ReclamoViewModel
+                 {
+                     Materiales=_combosHelper.GetComboMateriales(),
+                     Tecnicos=_combosHelper.GetComboTecnicos(),
+                     TipoReclamos=_combosHelper.GetComboTipodeReclamos()
+
+
+                 };
+
+                return View(model);
             }
 
             // POST: ReclamoTypes/Create
 
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Create(Material material)
+            public async Task<IActionResult> Create(Reclamo reclamo)
             {
                 if (ModelState.IsValid)
                 {
                     try
                     {
-                        _context.Add(material);
+                        _context.Add(reclamo);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
@@ -46,7 +66,7 @@ namespace HR.API.Controllers
 
                         if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                         {
-                            ModelState.AddModelError(string.Empty, "Ya Existe este Tipo de Material");
+                            ModelState.AddModelError(string.Empty, "Ya Existe este Reclamo");
                         }
                         else
                         {
@@ -58,7 +78,7 @@ namespace HR.API.Controllers
                         ModelState.AddModelError(string.Empty, exception.Message);
                     }
                 }
-                return View(material);
+                return View(reclamo);
             }
 
             // GET: ReclamoTypes/Edit/5
@@ -69,21 +89,21 @@ namespace HR.API.Controllers
                     return NotFound();
                 }
 
-                Material? material = await _context.Materiales.FindAsync(id);
-                if (material == null)
+                Reclamo? reclamo = await _context.Reclamos.FindAsync(id);
+                if (reclamo == null)
                 {
                     return NotFound();
                 }
-                return View(material);
+                return View(reclamo);
             }
 
             // POST: ReclamoTypes/Edit/5
 
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Edit(int id, Material material)
+            public async Task<IActionResult> Edit(int id, Reclamo reclamo)
             {
-                if (id != material.Id)
+                if (id != reclamo.Id)
                 {
                     return NotFound();
                 }
@@ -92,7 +112,7 @@ namespace HR.API.Controllers
                 {
                     try
                     {
-                        _context.Update(material);
+                        _context.Update(reclamo);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
@@ -101,7 +121,7 @@ namespace HR.API.Controllers
 
                         if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                         {
-                            ModelState.AddModelError(string.Empty, "Ya Existe este Tipo de Material");
+                            ModelState.AddModelError(string.Empty, "Ya Existe este Reclamo");
                         }
                         else
                         {
@@ -114,24 +134,24 @@ namespace HR.API.Controllers
                     }
 
                 }
-                return View(material);
+                return View(reclamo);
             }
 
             // GET: Funciones/Delete/5
             public async Task<IActionResult> Delete(int? id)
             {
-                if (id == null || _context.Materiales == null)
+                if (id == null || _context.Reclamos == null)
                 {
                     return NotFound();
                 }
 
-                Material? material = await _context.Materiales
+                Reclamo? reclamo = await _context.Reclamos
                     .FirstOrDefaultAsync(m => m.Id == id);
-                if (material == null)
+                if (reclamo == null)
                 {
                     return NotFound();
                 }
-                _context.Materiales.Remove(material);
+                _context.Reclamos.Remove(reclamo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

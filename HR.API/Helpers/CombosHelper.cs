@@ -49,7 +49,7 @@ namespace HR.API.Helpers
         {
             List<SelectListItem> list = _context.Users.Select(x => new SelectListItem
             {
-                Text = x.FullName,
+                Text =x.LastName,
                 Value = $"{x.Id}"
             }).OrderBy(x => x.Text)
               .ToList();
