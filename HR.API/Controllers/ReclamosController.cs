@@ -39,8 +39,11 @@ namespace HR.API.Controllers
                  {
                      Materiales=_combosHelper.GetComboMateriales(),
                      Tecnicos=_combosHelper.GetComboTecnicos(),
-                     TipoReclamos=_combosHelper.GetComboTipodeReclamos()
-
+                     TipoReclamos=_combosHelper.GetComboTipodeReclamos(),
+                    HLlegada=new DateTime(),
+                     HSalida = new DateTime(),
+                     Resolucion="_",
+                     Observaciones="_",
 
                  };
 

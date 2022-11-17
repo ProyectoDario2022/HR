@@ -12,7 +12,11 @@
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+             <input type="hidden" asp-for="HLlegada" />
+              <input type="hidden" asp-for="HSalida" />
+              <input type="hidden" asp-for="Resolucion" />
+              <input type="hidden" asp-for="Observaciones" />
+
             <partial name="_Reclamo"/>
 
             <div class="form-group">

@@ -32,7 +32,7 @@ namespace HR.API.Models
 
         [Display(Name = "Resolucion del Reclamo")]
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
-        [Required(ErrorMessage = "El campo{0} es obligatorio")]
+        //[Required(ErrorMessage = "El campo{0} es obligatorio")]
         public string? Resolucion { get; set; }
 
         [Display(Name = "Observacioes de Reclamo")]
