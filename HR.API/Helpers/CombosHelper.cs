@@ -53,12 +53,12 @@ namespace HR.API.Helpers
                 Value = $"{x.Id}"
             }).OrderBy(x => x.Text)
               .ToList();
-           /* list.Insert(0, new SelectListItem
+           list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione un Tecnico.]",
                 Value = "0"
 
-            });*/
+            });
             return list;
         }
 

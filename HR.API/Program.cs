@@ -44,6 +44,8 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 //builder.Services.AddScoped<IBlodHelper, BlobHelper>();
 builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
+builder.Services.AddScoped<IConverterReclamoHelper, ConverterReclamoHelper>();
+
 builder.Services.AddScoped<IMailHelper, MailHelper>();
 
 

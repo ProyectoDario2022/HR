@@ -5,7 +5,7 @@ namespace HR.API.Data.Entities
     public class Reclamo
     {
         public int Id { get; set; }
-        
+
         [Display(Name = "Número de Reclamo")]
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
@@ -35,7 +35,7 @@ namespace HR.API.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public string? Observaciones { get; set; }
-        
+
         [Display(Name = "Lista de Tecnicos asignados al Reclamo")]
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
@@ -60,5 +60,6 @@ namespace HR.API.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo{0} no puede tener mas de {1} carácteres")]
         [Required(ErrorMessage = "El campo{0} es obligatorio")]
         public string? Comentario { get; set; }
+
     }
 }

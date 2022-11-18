@@ -10,14 +10,17 @@ namespace HR.API.Controllers
 {
         [Authorize(Roles = "Admin")]
         public class ReclamosController : Controller
-        {
-            private readonly DataContext _context;
+    {
+        private bool agregadook = false;
+        private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
-
-        public ReclamosController(DataContext context,ICombosHelper combosHelper)
+        private readonly IConverterReclamoHelper _converterReclamoHelper;
+        private Reclamo reclamo1 = new Reclamo();
+        public ReclamosController(DataContext context,ICombosHelper combosHelper,IConverterReclamoHelper converterReclamoHelper)
             {
                 _context = context;
                 _combosHelper = combosHelper;
+                 _converterReclamoHelper = converterReclamoHelper;
         }
             // GET: ReclamoTypes
             public async Task<IActionResult> Index()
@@ -56,18 +59,29 @@ namespace HR.API.Controllers
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> Create(ReclamoViewModel reclamo)
             {
+           
                 if (ModelState.IsValid)
                 {
                     try
                     {
-                        _context.Add(reclamo);
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
+
+                        reclamo1 = await _converterReclamoHelper.ToReclamoAsync(reclamo, true);
+                        var BuscaAbonado = await _context.Abonados.FirstOrDefaultAsync(x => x.Numero == reclamo.AbonadoId);
+
+                        if (BuscaAbonado != null)
+                        {
+                          BuscaAbonado.Reclamos.Add(reclamo1);
+                        }
+                        _context.Add(reclamo1);
+                         await _context.SaveChangesAsync();
+                        agregadook = true;
+                        
                     }
                     catch (DbUpdateException dbUpdateException)
                     {
+                    agregadook = false;
 
-                        if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                         {
                             ModelState.AddModelError(string.Empty, "Ya Existe este Reclamo");
                         }
@@ -81,7 +95,35 @@ namespace HR.API.Controllers
                         ModelState.AddModelError(string.Empty, exception.Message);
                     }
                 }
-                return View(reclamo);
+            if (agregadook)
+            {/*
+                var tecnico=_context.Users.FirstOrDefaultAsync(x=>x.Id == reclamo.TecnicoId);
+                var reclamoBuscar=_context.Reclamos.FirstOrDefaultAsync(x=>x.Numero == reclamo.Numero);
+                //Reclamo reclamo1 = await _converterReclamoHelper.ToReclamoAsync(reclamo, true);
+                ReclamoTecnico nuevo = new ReclamoTecnico();
+                nuevo.ReclamoId = reclamoBuscar.Id;
+                nuevo.UserId = tecnico.Id;
+
+                _context.Add(nuevo);
+                await _context.SaveChangesAsync();
+                /*
+                var BuscaAbonado = await _context.Abonados.FirstOrDefaultAsync(x => x.Numero == reclamo.AbonadoId);
+
+                if (BuscaAbonado != null)
+                {
+                    BuscaAbonado.Reclamos.Add(reclamo1);
+                }
+                else
+                {
+                    _context.Add(reclamo1.Abonado);
+                    await _context.SaveChangesAsync();
+                }
+ */
+
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(reclamo);
             }
 
             // GET: ReclamoTypes/Edit/5
