@@ -96,13 +96,13 @@ namespace HR.API.Controllers
                     }
                 }
             if (agregadook)
-            {/*
-                var tecnico=_context.Users.FirstOrDefaultAsync(x=>x.Id == reclamo.TecnicoId);
-                var reclamoBuscar=_context.Reclamos.FirstOrDefaultAsync(x=>x.Numero == reclamo.Numero);
+            {
+                var tecnico=await _context.Users.FirstOrDefaultAsync(x=>x.Id == reclamo.TecnicoId);
+                var reclamoBuscar=await _context.Reclamos.FirstOrDefaultAsync(x=>x.Numero == reclamo.Numero);
                 //Reclamo reclamo1 = await _converterReclamoHelper.ToReclamoAsync(reclamo, true);
                 ReclamoTecnico nuevo = new ReclamoTecnico();
                 nuevo.ReclamoId = reclamoBuscar.Id;
-                nuevo.UserId = tecnico.Id;
+                nuevo.User = tecnico;
 
                 _context.Add(nuevo);
                 await _context.SaveChangesAsync();

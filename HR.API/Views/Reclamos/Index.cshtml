@@ -19,7 +19,7 @@
                     <thead>
                          <tr>
                              <th>
-                                 @Html.DisplayNameFor(model => model.Abonado)
+                                 @Html.DisplayNameFor(model => model.Abonado.Numero)
                                  
                              </th>
                              <th>
@@ -27,7 +27,7 @@
                                 
                              </th>
                              <th>
-                                 @Html.DisplayNameFor(model => model.TipoReclamo)
+                                 @Html.DisplayNameFor(model => model.TipoReclamo.Descripcion)
                                  
                              </th>
                              <th>
@@ -46,7 +46,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Abonado)
+                                    @Html.DisplayFor(modelItem => item.Abonado.Numero)
                                    
                                     
                                 </td>
@@ -59,7 +59,7 @@
 
                                  <td>
                                    
-                                    @Html.DisplayFor(modelItem => item.TipoReclamo)
+                                    @Html.DisplayFor(modelItem => item.TipoReclamo.Descripcion)
                                     
                                 </td>
                                  <td>
